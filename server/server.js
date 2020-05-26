@@ -1,10 +1,18 @@
 const express = require('express');
+const PORT = process.env.PORT || 3000;
 const knex = require('knex');
 const dbConfig = require('./knexfile');
 
 const db = knex(dbConfig.development);
 const server = express();
 server.use(express.json());
+
+server.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+})
 
 // =======================CRUD OPERATIONS==========================================
 
@@ -28,9 +36,9 @@ server.get('/api/acronymNames/:id', (req, res) => {
         })
 })
 
-
 server.post('/api/acronymNames', (req, res) => {
     const data = req.body;
+    console.log(data)
     db.insert(data).into('acronyms').then(id => {
         res.status(201).json(id)
     }).catch(err => {
@@ -69,4 +77,4 @@ server.put("/api/acronymNames/:id", (req, res) => {
         })
 });
 
-server.listen(6500, () => { console.log("Starting port at PORT 6500") }); 
+server.listen(PORT, () => { console.log(`Starting port at PORT ${PORT}`) }); 
