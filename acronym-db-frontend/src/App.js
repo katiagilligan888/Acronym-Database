@@ -49,9 +49,9 @@ class App extends React.Component {
     };
 
     axios
-      .post("http://localhost:6500/api/acronymNames", newAcronym)
+      .post("https://acronym-db-server-msft.herokuapp.com/api/acronymNames", newAcronym)
       .then(response => {
-        axios.get("http://localhost:6500/api/acronymNames").then(response => {
+        axios.get("https://acronym-db-server-msft.herokuapp.com/api/acronymNames").then(response => {
       this.setState({
         acronymData: response.data
       })
@@ -67,7 +67,7 @@ class App extends React.Component {
   };
 
   componentDidMount = () => {
-    axios.get("http://localhost:6500/api/acronymNames").then(response => {
+    axios.get("https://acronym-db-server-msft.herokuapp.com/api/acronymNames").then(response => {
       this.setState({
         acronymData: response.data
       })
